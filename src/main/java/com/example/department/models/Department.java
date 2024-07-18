@@ -29,8 +29,10 @@ public class Department implements Serializable {
 
     private String description;
 
-    @Transient
-    private List<EmployeeDto> employees;
+    @ElementCollection
+    @CollectionTable(name = "department_employee_emails", joinColumns = @JoinColumn(name = "department_id"))
+    @Column(name = "employee_email")
+    private List<String> employeeEmails;
 
     @CreatedDate
     @Column(nullable = false, updatable = false)

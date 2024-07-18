@@ -1,5 +1,6 @@
 package com.example.department.security;
 
+import com.example.department.dtos.UserDto;
 import com.example.department.models.Department;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;

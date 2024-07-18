@@ -9,6 +9,11 @@ import org.springframework.security.authentication.LockedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.bind.MissingRequestHeaderException;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
+
 
 import java.util.HashSet;
 import java.util.Set;
@@ -84,6 +89,31 @@ public class GlobalExceptionHandler {
                                 .build()
                 );
     }
+    @ExceptionHandler(MissingRequestHeaderException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<ExceptionResponse> handleMissingRequestHeaderException(MissingRequestHeaderException exception) {
+        String errorMessage = "Required request header '" + exception.getHeaderName() + "' for method parameter type " + exception.getParameter().getParameterType().getSimpleName() + " is not present";
+        return ResponseEntity
+                .badRequest()
+                .body(
+                        ExceptionResponse.builder()
+                                .errorDescription("Missing Request Header")
+                                .error(errorMessage)
+                                .build()
+                );
+    }
+    @ExceptionHandler(NoResourceFoundException.class)
+    public ResponseEntity<ExceptionResponse> handleNoResourceFoundException(NoResourceFoundException exception) {
+        return ResponseEntity
+                .status(NOT_FOUND)
+                .body(
+                        ExceptionResponse.builder()
+                                .errorCode(404)
+                                .errorDescription("May be this is a wrong URL?")
+                                .error(exception.getMessage())
+                                .build()
+                );
+    }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ExceptionResponse> handleException(Exception exception) {
@@ -92,7 +122,7 @@ public class GlobalExceptionHandler {
                 .status(INTERNAL_SERVER_ERROR)
                 .body(
                         ExceptionResponse.builder()
-                                .errorDescription("Email already exists")
+                                .errorDescription("some hidden error, may be wrong urrl")
                                 .error(exception.getMessage())
                                 .build()
                 );
