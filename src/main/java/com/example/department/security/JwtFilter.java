@@ -60,7 +60,7 @@ public class JwtFilter extends OncePerRequestFilter {
         final String userEmail;
         jwt = authHeader.substring(7);
         userEmail = jwtService.extractUsername(jwt);
-        System.out.println("before call user");
+        //System.out.println("before call user");
         if (request.getServletPath().contains("/register") || request.getServletPath().contains("/delete")) {
             final List<String> authority = jwtService.extractAuthorities(jwt);
             if (authority.contains("ADMIN")){
@@ -71,7 +71,7 @@ public class JwtFilter extends OncePerRequestFilter {
         }
 
         if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            System.out.println("tag1");
+            //System.out.println("tag1");
             UserDto userDto = userServiceClient.getUserByEmail(userEmail);
 
             //UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);

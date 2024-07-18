@@ -28,7 +28,7 @@ public class UserServiceClient {
     }
     public UserDto getUserByEmail(String email) {
         String url = userServiceUrl + "/email?email=" + email;
-        System.out.println("tag3 "+url);
+        //System.out.println("tag3 "+url);
         try {
             ResponseEntity<UserDto> response = restTemplate.exchange(
                     url,

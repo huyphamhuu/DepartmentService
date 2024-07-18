@@ -45,7 +45,7 @@ public class ManagementController {
             @RequestParam("mail") String mail,
             @RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader)
     {
-        System.out.println("get in API");
+        //System.out.println("get in API");
         EmployeeDto updatedEmployee = departmentService.addEmployeeToDepartment(departmentName, mail);
         return new ResponseEntity<>(updatedEmployee, HttpStatus.OK);
     }
@@ -55,7 +55,7 @@ public class ManagementController {
             @RequestParam("mail") String mail,
             @RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader)
     {
-        System.out.println("get in API");
+        //System.out.println("get in API");
         EmployeeDto deletedEmployee = departmentService.deleteEmployeeToDepartment(departmentName, mail);
         return new ResponseEntity<>(HttpStatus.OK);
     }
